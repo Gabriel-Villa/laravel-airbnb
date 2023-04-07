@@ -30,6 +30,6 @@ Route::get('countries', function()
         'Usa',
     ];
 
-    return response()->json(['countries' => $countries], 200);
+    return response()->success(['countries' => $countries]);
 
 });
