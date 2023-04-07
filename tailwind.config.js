@@ -7,15 +7,23 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './node_modules/flowbite/**/*.js'
     ],
 
     theme: {
         extend: {
+            colors: {
+                'my-gray': '#222222',
+            },
             fontFamily: {
                 sans: ['Nunito', 'sans-serif'],
             },
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [
+        require('flowbite/plugin'),
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography')
+    ],
 };
