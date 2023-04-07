@@ -1,20 +1,29 @@
 <template>
-    <div class="fixed top-20 right-4 z-50 w-full max-w-xs">
-        <ToastListItem @removeToast="removeToast" message="Custom message"/>
-    </div>
+    <TransitionGroup tag="div"
+        enter-from-class="translate-x-full opacity-0"
+        enter-active-class="duration-500"
+        leave-active-class="duration-500"
+        leave-to-class="translate-x-full opacity-0"
+        class="fixed top-20 right-4 z-50 w-full max-w-xs">
+        <template v-for="toast in toasts" :key="toast.id">
+            <ToastListItem
+                @removeToast="removeToast(toast.id)"
+                :message="toast.message"
+            />
+        </template>
+    </TransitionGroup>
 </template>
 
 <script setup>
 
     import ToastListItem from '@/Components/ToastListItem.vue';
 
-    const props = defineProps({
-        message: String
-    });
+    import { useToast } from '@/Composables/toast.js'
 
-    function removeToast()
+    const { deleteToast, toasts } = useToast();
+
+    function removeToast(id)
     {
-        console.log("Remove");
+        deleteToast(id);
     }
-
 </script>

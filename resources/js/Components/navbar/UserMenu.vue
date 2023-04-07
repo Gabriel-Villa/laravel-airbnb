@@ -97,6 +97,7 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
+    import axios from 'axios';
 
     import Avatar from '@/Components/Avatar.vue'
     import MenuItem from '@/Components/navbar/MenuItem.vue'
@@ -107,14 +108,12 @@
     import InputError from '@/Components/InputError.vue';
     import SecondaryButton from '@/Components/SecondaryButton.vue';
     import TextInput from '@/Components/TextInput.vue';
-import axios from 'axios';
 
     const showUserMenu = ref(false);
     const showLoginModal = ref(false);
     const closeLoginModal = ref(false);
 
     const countries = ref([]);
-
 
     onMounted(() => {
         axios.get('/api/v1/countries').then((res) => console.log(res));
