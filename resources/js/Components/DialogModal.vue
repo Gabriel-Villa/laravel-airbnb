@@ -1,4 +1,5 @@
 <script setup>
+
 import Modal from './Modal.vue';
 
 const emit = defineEmits(['close']);
@@ -31,11 +32,13 @@ const close = () => {
         @close="close"
     >
         <div class="px-6 py-4">
-            <div class="text-lg font-medium text-gray-900">
-                <slot name="title" />
+            <div class="text-lg font-medium text-gray-900 flex justify-between align-middle">
+                <font-awesome-icon class="text-sm cursor-pointer rounded-full text-my-gray" icon="fa-solid fa-xmark" @click="close" />
+                <slot name="title"/>
+                <p></p>
             </div>
 
-            <div class="mt-4 text-sm text-gray-600">
+            <div class="mt-4 text-sm text-gray-600 px-4">
                 <slot name="content" />
             </div>
         </div>

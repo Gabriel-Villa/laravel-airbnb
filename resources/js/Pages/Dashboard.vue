@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <Layout>
+    <Layout title="Dashboard Page">
         Dashboard page
     </Layout>
 </template>

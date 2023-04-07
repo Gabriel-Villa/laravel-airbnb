@@ -6,7 +6,7 @@
         md:w-auto
         py-2
         rounded-full
-        shadow-sm
+        shadow-md
         hover:shadow-md
         transition
         cursor-pointer
