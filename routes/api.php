@@ -23,11 +23,11 @@ Route::get('countries', function()
 {
 
     $countries = [
-        'Peru',
-        'Colombia',
-        'Brasil',
-        'Ecuador',
-        'Usa',
+        ['id' => 1, 'name' => 'Peru'],
+        ['id' => 2, 'name' => 'Colombia'],
+        ['id' => 3, 'name' => 'Brasil'],
+        ['id' => 4, 'name' => 'Peru'],
+        ['id' => 5, 'name' => 'Ecuador'],
     ];
 
     return response()->success(['countries' => $countries]);

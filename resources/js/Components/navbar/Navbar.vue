@@ -11,11 +11,13 @@
                     ">
                     <Logo />
                     <Search />
-                    <UserMenu />
+                    <MenuUser />
                 </div>
             </Container>
         </div>
     </div>
+
+
 </template>
 
 <script setup>
@@ -23,7 +25,7 @@
     import Container from '@/Components/Container.vue';
     import Logo from '@/Components/navbar/Logo.vue';
     import Search from '@/Components/navbar/Search.vue';
-    import UserMenu from '@/Components/navbar/UserMenu.vue';
+    import MenuUser from '@/Components/navbar/MenuUser.vue';
 
 </script>
 
