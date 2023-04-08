@@ -5,27 +5,29 @@
         </template>
 
         <template #content>
-            <h3 class="font-bold text-lg">Welcome to Airbnb</h3>
+            <h3 class="font-bold text-lg mb-3">Welcome to Airbnb</h3>
 
-            <div class="mt-4">
-                <select class="select-airbn">
-                    <option selected>Choose a country</option>
-                        <template v-for="country in countries.list" :key="country.id">
-                            <option :value="country.id">{{ country.name }}</option>
-                        </template>
-                </select>
-
-                <!-- <InputError :message="form.errors.password" class="mt-2" /> -->
+            <div class="col-span-6 sm:col-span-4">
+                <TextInput
+                    id="email"
+                    placeholder="Enter your email:"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <!-- <InputError :message="form.errors.name" class="mt-2" /> -->
             </div>
 
-            <p class="text-normal my-4">
-                We are going to confirm the number by phone or text message.
-                Subject to the standard messages and data rates
+            <div class="col-span-6 sm:col-span-4 mt-3">
+                <TextInput
+                    type="password"
+                    id="password"
+                    placeholder="Password:"
+                    class="mt-1 block w-full"
+                />
+                <!-- <InputError :message="form.errors.name" class="mt-2" /> -->
+            </div>
 
-                Privacity Policy
-            </p>
-
-            <button class="w-full bg-[#DB0C63] border-[#243c5a] text-white py-2 px-4 rounded-lg">
+            <button class="mt-8 w-full bg-[#DB0C63] border-[#243c5a] text-white py-2 px-4 rounded-lg">
                 <div class="text-lg font-semibold">
                     Continue
                 </div>
@@ -37,7 +39,7 @@
                     class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">o</span>
             </div>
 
-            <button class=" w-full rounded-lg flex justify-between align-middle px-6 py-2.5 bg-white border border-black">
+            <button class="w-full rounded-lg flex justify-between align-middle px-6 py-2.5 bg-white border border-black hover:bg-black hover:text-white transition duration-500 ">
                 <font-awesome-icon class="text-lg" icon="fa-brands fa-github" />
                 <p class="font-semibold text-md">Continue with Github</p>
                 <p></p>
@@ -49,22 +51,12 @@
 </template>
 
 <script setup>
-    import { onMounted, ref, defineProps, onUnmounted, watch, reactive } from 'vue';
+    import { defineProps } from 'vue';
     import DialogModal from '@/Components/DialogModal.vue';
-
-    import { useHttp } from '@/Composables/helpHttp.js';
-    const { get } = useHttp();
+    import TextInput from '@/Components/TextInput.vue';
+    import InputLabel from '@/Components/InputLabel.vue';
 
     defineEmits(['closeLoginForm'])
 
     const props = defineProps({ showModal: { default: false, type: Boolean} });
-
-    const countries = reactive({ list: [] });
-
-    onMounted(async() =>
-    {
-        let res = await get("api/v1/countries");
-
-        countries.list = res.data?.countries;
-    });
 </script>

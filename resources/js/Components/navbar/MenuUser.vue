@@ -41,7 +41,7 @@
             rounded-xl
             shadow-lg
             bg-white
-            w-[20vw]
+            w-[13vw]
             overflow-hidden
             top-20
             right-20

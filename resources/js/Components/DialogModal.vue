@@ -31,8 +31,8 @@ const close = () => {
         :closeable="closeable"
         @close="close"
     >
-        <div class="px-6 py-4">
-            <div class="text-lg font-medium text-gray-900 flex justify-between align-middle">
+        <div class="px-8 py-4">
+            <div class="text-lg font-medium text-gray-900 flex justify-between items-center px-4">
                 <font-awesome-icon class="text-sm cursor-pointer rounded-full text-my-gray" icon="fa-solid fa-xmark" @click="close" />
                 <slot name="title"/>
                 <p></p>
