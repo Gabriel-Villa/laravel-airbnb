@@ -4,7 +4,7 @@
 
 <template>
     <Layout title="Dashboard Page">
-        Dashboard page
+
     </Layout>
 </template>
 

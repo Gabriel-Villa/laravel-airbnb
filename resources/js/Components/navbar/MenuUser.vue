@@ -71,6 +71,7 @@
     function toggleLoginForm()
     {
         showLoginForm.value = true;
+        showUserMenu.value = false;
     }
 
     function closeLoginForm()
