@@ -56,16 +56,17 @@
 </template>
 
 <script setup>
-    import { defineProps } from 'vue';
-    import { useToast } from '@/Composables/toast.js'
+    import { defineProps, onMounted } from 'vue';
     import DialogModal from '@/Components/DialogModal.vue';
     import TextInput from '@/Components/TextInput.vue';
-    import { useForm, router } from '@inertiajs/vue3';
+    import { router, useForm } from '@inertiajs/vue3';
     import InputError from '../InputError.vue';
 
-    const emit = defineEmits(['closeLoginForm'])
+    import { useToast } from '@/Composables/toast.js';
 
-    const { addToast, deleteToast } = useToast();
+    const { successToast, errorToast } = useToast();
+
+    const emit = defineEmits(['closeLoginForm'])
 
     const props = defineProps({
         showModal: { default: false, type: Boolean},
@@ -85,6 +86,10 @@
             onSuccess: (res) => {
                 form.reset();
                 emit('closeLoginForm');
+                successToast({message: 'Login successfull'});
+            },
+            onError : (err) => {
+                errorToast({message: 'Please try again'});
             }
         });
 

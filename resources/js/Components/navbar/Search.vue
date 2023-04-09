@@ -5,6 +5,7 @@
         w-auto
         md:w-auto
         py-2
+        m-auto
         rounded-full
         shadow-md
         hover:shadow-md

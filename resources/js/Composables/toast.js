@@ -1,25 +1,29 @@
-import { ref } from "vue";
+import { toast } from 'vue3-toastify';
 
 export function useToast()
 {
 
-    const toasts = ref([]);
-
-    function addToast(toast)
+    function successToast({ message })
     {
-        toasts.value.unshift({id: Symbol(), ...toast});
+        toast.success(message, {
+            theme: 'colored',
+            position: toast.POSITION.TOP_RIGHT,
+            pauseOnHover: true
+        });
     }
 
-    function deleteToast(key)
+    function errorToast({ message })
     {
-        console.log(key);
-        toasts.value = toasts.value.filter((toast) => toast.id != key);
+        toast.error(message, {
+            theme: 'colored',
+            position: toast.POSITION.TOP_RIGHT,
+            pauseOnHover: true
+        });
     }
 
     return {
-        addToast,
-        deleteToast,
-        toasts
+        successToast,
+        errorToast,
     }
 
 }
