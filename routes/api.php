@@ -18,9 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::get('countries', function()
-{
+Route::get('countries', function () {
 
     $countries = [
         ['id' => 1, 'name' => 'Peru'],

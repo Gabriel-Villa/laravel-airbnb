@@ -14,3 +14,9 @@ https://fontawesome.com/docs/web/use-with/vue/
 ~~~  
 https://laravel.com/docs/10.x/rate-limiting
 ~~~
+
+4. Run laravel/pint in sail
+~~~  
+sail bin pint
+~~~  
+

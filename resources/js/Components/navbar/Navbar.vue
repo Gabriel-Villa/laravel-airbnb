@@ -15,8 +15,10 @@
                 </div>
             </Container>
         </div>
-    </div>
 
+        <Categories />
+
+    </div>
 
 </template>
 
@@ -26,6 +28,7 @@
     import Logo from '@/Components/navbar/Logo.vue';
     import Search from '@/Components/navbar/Search.vue';
     import MenuUser from '@/Components/navbar/MenuUser.vue';
+    import Categories from '@/Components/navbar/Categories.vue';
 
 </script>
 

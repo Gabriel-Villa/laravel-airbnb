@@ -56,10 +56,10 @@
 </template>
 
 <script setup>
-    import { defineProps, onMounted, onUpdated } from 'vue';
+    import { defineProps } from 'vue';
     import DialogModal from '@/Components/DialogModal.vue';
     import TextInput from '@/Components/TextInput.vue';
-    import { router, useForm, usePage } from '@inertiajs/vue3';
+    import { router, useForm } from '@inertiajs/vue3';
     import InputError from '../InputError.vue';
 
     import { useToast } from '@/Composables/toast.js';
@@ -77,21 +77,6 @@
         email: "dev@gmail.com",
         password: "1234",
     });
-
-
-    console.log(props);
-
-    // onUpdated(() => {
-
-    //     console.log("Updated login");
-
-    // });
-
-    // onMounted(() => {
-
-    //     console.log("onMounted login");
-
-    // });
 
     const submit = () =>
     {

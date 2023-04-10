@@ -18,6 +18,9 @@ import {
     faMagnifyingGlass,
     faBars,
     faXmark,
+    faHouse,
+    faUmbrellaBeach,
+    faFire
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebook, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -29,7 +32,10 @@ library.add(
     faGoogle,
     faGithub,
     faBars,
-    faXmark
+    faXmark,
+    faHouse,
+    faUmbrellaBeach,
+    faFire
 )
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
