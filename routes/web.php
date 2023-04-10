@@ -25,7 +25,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::post('custom-login', [LoginController::class, 'login'])->name('login.post');
+Route::post('app/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('app/logout', [LoginController::class, 'logout'])->name('logout.post');
 
 // Route::middleware([
 //     'auth:sanctum',

@@ -3,7 +3,9 @@
         <div class="flex flex-row items-center gap-3">
             <div
                 class="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
-                Airnb your home
+                <template v-if="user">
+                    {{ user.name }}
+                </template>
             </div>
             <div class="
                 flex
@@ -47,9 +49,14 @@
             right-20
             text-sm
         ">
-        <div class="flex flex-col cursor-pointer">
+        <div class="flex flex-col cursor-pointer" v-if="!user">
             <menu-item @click="toggleLoginForm">Login</menu-item>
             <menu-item>Sing up</menu-item>
+        </div>
+        <div class="flex flex-col cursor-pointer" v-else>
+            <NavLink :href="route('logout.post')" method="post" as="button">
+                Log Out
+            </NavLink>
         </div>
     </div>
 
@@ -60,10 +67,14 @@
 <script setup>
 
     import { ref } from 'vue';
+    import { router, usePage, Link } from '@inertiajs/vue3'
 
     import Avatar from '@/Components/Avatar.vue'
+    import NavLink from '@/Components/NavLink.vue'
     import MenuItem from '@/Components/navbar/MenuItem.vue'
     import LoginForm from '../auth/LoginForm.vue';
+
+    const user = usePage().props.auth.user;
 
     const showUserMenu = ref(false);
     const showLoginForm = ref(false);
@@ -74,10 +85,6 @@
         showUserMenu.value = false;
     }
 
-    function closeLoginForm()
-    {
-        showLoginForm.value = false;
-    }
-
+    const closeLoginForm = () => showLoginForm.value = false;
 
 </script>
