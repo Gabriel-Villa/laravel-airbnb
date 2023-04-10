@@ -31,7 +31,7 @@
                     <InputError :message="form.errors.password" class="mt-2" />
                 </div>
 
-                <button class="mt-8 w-full bg-[#DB0C63] border-[#243c5a] text-white py-2 px-4 rounded-lg">
+                <button :disabled="form.processing" class="mt-8 w-full bg-[#DB0C63] border-[#243c5a] text-white py-2 px-4 rounded-lg">
                     <div class="text-lg font-semibold">
                         Continue
                     </div>
@@ -44,11 +44,11 @@
                     class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">o</span>
             </div>
 
-            <button :disabled="form.processing" class="w-full rounded-lg flex justify-between align-middle px-6 py-2.5 bg-white border border-black hover:bg-black hover:text-white transition duration-500 ">
+            <Link href="/auth/redirect"  :disabled="form.processing" as="button" class="w-full rounded-lg flex justify-between align-middle px-6 py-2.5 bg-white border border-black hover:bg-black hover:text-white transition duration-500 ">
                 <font-awesome-icon class="text-lg" icon="fa-brands fa-github" />
                 <p class="font-semibold text-md">Continue with Github</p>
                 <p></p>
-            </button>
+            </Link>
 
         </template>
 
@@ -59,7 +59,7 @@
     import { defineProps } from 'vue';
     import DialogModal from '@/Components/DialogModal.vue';
     import TextInput from '@/Components/TextInput.vue';
-    import { router, useForm } from '@inertiajs/vue3';
+    import { router, useForm, Link } from '@inertiajs/vue3';
     import InputError from '../InputError.vue';
 
     import { useToast } from '@/Composables/toast.js';
@@ -84,10 +84,9 @@
 
         form.post(url, {
             onSuccess: (res) => {
-                form.reset();
+                router.visit('/dashboard')
                 emit('closeLoginForm');
-                router.reload();
-                successToast({message: 'Login successfull'});
+                // successToast({message: 'Login successfull'});
             },
             onError : (err) => {
                 errorToast({message: 'Please try again'});

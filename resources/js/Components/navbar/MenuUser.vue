@@ -12,6 +12,7 @@
                 justify-between
                 align-middle
                 rounded-full
+                shadow-md
                 border-[1px]
                 border-neutral-200
                 px-2
@@ -54,9 +55,7 @@
             <menu-item>Sing up</menu-item>
         </div>
         <div class="flex flex-col cursor-pointer" v-else>
-            <NavLink :href="route('logout.post')" method="post" as="button">
-                Log Out
-            </NavLink>
+            <menu-item @click="logOut">Log Out</menu-item>
         </div>
     </div>
 
@@ -83,6 +82,12 @@
     {
         showLoginForm.value = true;
         showUserMenu.value = false;
+    }
+
+    function logOut()
+    {
+        router.visit('/app/logout', { method: 'post' });
+        router.visit('/dashboard');
     }
 
     const closeLoginForm = () => showLoginForm.value = false;

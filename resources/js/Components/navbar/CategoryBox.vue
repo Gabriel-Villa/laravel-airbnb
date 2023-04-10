@@ -1,5 +1,4 @@
 <template>
-
    <div class="
         flex
         flex-col
@@ -19,12 +18,9 @@
             {{ name }}
         </div>
    </div>
-
 </template>
 
 <script setup>
-    import { usePage } from '@inertiajs/vue3';
-
     const props = defineProps({
         id: {
             required: true
@@ -38,5 +34,4 @@
             required: true
         },
     });
-
 </script>
