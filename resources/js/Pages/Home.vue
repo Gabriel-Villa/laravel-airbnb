@@ -1,6 +1,6 @@
 
 <template>
-    <Layout title="Dashboard Page">
+    <Layout title="Home Page">
         <p v-for="(listing, index) in props.users.data" :key="index">
             {{ listing.name }} {{ listing.id }}
         </p>
@@ -9,8 +9,8 @@
 
 <script setup>
     import Layout from '@/Layouts/Layout.vue';
-import { usePage } from '@inertiajs/vue3';
-    import { ref, defineProps } from 'vue';
+    import { usePage } from '@inertiajs/vue3';
+    import { defineProps } from 'vue';
 
     const props = defineProps({
         users : {

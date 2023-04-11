@@ -33,7 +33,7 @@
 
     function querySearch({id, name})
     {
-        router.get('/dashboard', { search: name }, { preserveScroll: true })
+        router.get(route('home'), { search: name }, { preserveScroll: true })
     }
 
 </script>

@@ -87,7 +87,7 @@
     function logOut()
     {
         router.visit('/app/logout', { method: 'post' });
-        router.visit('/dashboard');
+        router.visit(route('home'));
     }
 
     const closeLoginForm = () => showLoginForm.value = false;
