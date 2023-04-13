@@ -3,16 +3,16 @@
     <Layout title="Home Page">
 
 
-            <!-- <div v-if="props.users.data.length <= 0" class="h-[60vh] flex flex-col gap-2 justify-center items-center">
-                <h1 class="text-2xl first-letter:semibold">No matches</h1>
-                <p class="font-light text-neutral-500 mt-2">
+            <div v-if="props.users.data.length <= 0" class="h-[60vh] flex flex-col gap-2 justify-center items-center">
+                <h1 class="text-3xl first-letter:semibold">No Results</h1>
+                <p class="font-light text-neutral-500 mt-2 underline">
                     Try to changeing or remoing some of your filters
                 </p>
-            </div> -->
+            </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
 
-                <div class="col-span-1 cursor-pointer" v-for="n in Math.floor(Math.random() * 20) + 1"  :key="n">
+                <div class="col-span-1 cursor-pointer" v-for="listing in props.users.data"  :key="listing.id">
                     <div class="flex gap-2 w-full">
                         <div class="aspect-square w-full relative overflow-hidden rounded-xl">
                             <img class="object-cover h-full w-full hover:scale-110 transition" src="https://a0.muscache.com/im/pictures/miso/Hosting-29459696/original/d13b86bf-4f1c-43f0-a44e-8a9edfda26f1.jpeg?im_w=720" />
@@ -56,6 +56,6 @@
         }
     });
 
-    console.log(usePage().props);
+    console.log(props.users);
 
 </script>

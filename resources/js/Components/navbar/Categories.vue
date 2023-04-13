@@ -25,9 +25,11 @@
     import CategoryBox from '@/Components/navbar/CategoryBox.vue';
 
     const categories = reactive([
-        {id: 1, name: 'f', icon: 'fa-solid fa-house'},
-        {id: 2, name: 'g', icon: 'fa-solid fa-fire'},
-        {id: 3, name: 'd', icon: 'fa-solid fa-umbrella-beach'},
+        {id: 1, name: 'Houses', icon: 'fa-solid fa-house'},
+        {id: 2, name: 'Populars', icon: 'fa-solid fa-fire'},
+        {id: 3, name: 'Islands', icon: 'fa-solid fa-umbrella-beach'},
+        {id: 4, name: 'Ships', icon: 'fa-solid fa-ship'},
+        {id: 5, name: 'Artic', icon: 'fa-solid fa-snowboarding'},
     ]);
 
     function querySearch({id, name})
