@@ -6,9 +6,11 @@
 
     <NavBar></NavBar>
 
-    <main>
-        <slot />
-    </main>
+    <Container>
+        <main class="py-5">
+            <slot />
+        </main>
+    </Container>
 
 </template>
 
@@ -19,6 +21,7 @@
     import NavBar from '@/Components/navbar/Navbar.vue'
 
     import ToastList from '@/Components/ToastList.vue';
+    import Container from '../Components/Container.vue';
 
     defineProps({
         title: {

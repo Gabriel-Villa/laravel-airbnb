@@ -65,11 +65,10 @@
 
 <script setup>
 
-    import { ref } from 'vue';
-    import { router, usePage, Link } from '@inertiajs/vue3'
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { router, usePage } from '@inertiajs/vue3'
 
     import Avatar from '@/Components/Avatar.vue'
-    import NavLink from '@/Components/NavLink.vue'
     import MenuItem from '@/Components/navbar/MenuItem.vue'
     import LoginForm from '../auth/LoginForm.vue';
 
@@ -88,6 +87,21 @@
     {
         router.visit('/app/logout', { method: 'post' });
         router.visit(route('home'));
+    }
+
+    onMounted(() => {
+        window.addEventListener("click", closeDropdown);
+    });
+
+    onUnmounted(() => {
+        window.removeEventListener("click", closeDropdown);
+    });
+
+    function closeDropdown(e)
+    {
+        if (!document.getElementById('dropdown-user-menu').contains(e.target)){
+            showUserMenu.value = false;
+        }
     }
 
     const closeLoginForm = () => showLoginForm.value = false;

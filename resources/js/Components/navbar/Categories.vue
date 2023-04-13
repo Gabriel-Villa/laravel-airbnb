@@ -2,7 +2,6 @@
 
     <div class="
         pt-4
-        px-4
         flex
         items-center
         justify-between

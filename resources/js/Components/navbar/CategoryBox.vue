@@ -4,7 +4,8 @@
         flex-col
         items-center
         gap-2
-        p-3
+        py-3
+        px-0
         border-b-2
         hover:text-neutral-800
         transition
