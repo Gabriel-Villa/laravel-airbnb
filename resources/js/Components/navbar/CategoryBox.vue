@@ -1,5 +1,5 @@
 <template>
-   <div class="
+   <button class="
         flex
         flex-col
         items-center
@@ -9,16 +9,17 @@
         border-b-2
         hover:text-neutral-800
         transition
-        cursor-pointer
    "
-   :class="$page.props.filters.search == name ? 'border-b-neutral-800 text-neutral-800' : 'border-transparent text-neutral-500'"
-   @click="$emit('querySearch', { id, name })"
+   :disabled="$page.props.filters.search === name"
+   :class="$page.props.filters.search == name ? 'border-b-neutral-800 text-neutral-800 cursor-not-allowed' : 'border-transparent text-neutral-500'"
+   @click.stop.prevent="$emit('querySearch', { id, name })"
    >
-        <font-awesome-icon class="text-sm" :icon="icon" />
+       <font-awesome-icon class="text-sm" :icon="icon" disabled />
         <div class="font-medium text-sm">
             {{ name }}
         </div>
-   </div>
+   </button>
+
 </template>
 
 <script setup>
