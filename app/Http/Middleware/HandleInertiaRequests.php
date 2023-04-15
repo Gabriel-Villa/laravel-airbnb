@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\LocationResource;
 use App\Models\Category;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -41,7 +44,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'toast' => fn () => $request->session()->get('toast'),
             ],
-            'categories' => Category::getAllCategories(),
+            'categories' => CategoryResource::collection(Category::getAllCategories()),
+            'locations' => LocationResource::collection(Location::all()),
         ]);
     }
 }
