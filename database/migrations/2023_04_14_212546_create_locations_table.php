@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique()->index()->comment("Country");
             $table->string('code')->index()->unique()->comment("Code of the country");
-            $table->timestamps();
         });
     }
 
