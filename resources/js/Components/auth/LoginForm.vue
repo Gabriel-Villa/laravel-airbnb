@@ -62,9 +62,9 @@
     import { router, useForm, Link } from '@inertiajs/vue3';
     import InputError from '../InputError.vue';
 
-    import { useToast } from '@/Composables/toast.js';
+    import { useNotification } from '@/Stores/notification.js';
 
-    const { successToast, errorToast } = useToast();
+    const store = useNotification();
 
     const emit = defineEmits(['closeLoginForm'])
 
@@ -86,6 +86,7 @@
             onSuccess: (res) => {
                 router.visit(route('home'))
                 emit('closeLoginForm');
+                store.addToast({message: 'Login successfull'});
                 // successToast({message: 'Login successfull'});
             },
             onError : (err) => {

@@ -1,8 +1,19 @@
 <script setup>
+    import { onMounted } from 'vue';
+
+    import { useNotification } from '@/Stores/notification.js';
+
+    const store = useNotification();
 
     const props = defineProps({
         message: String,
-        key: String
+        id: Symbol
+    });
+
+    onMounted(() => {
+        setTimeout(() => {
+            store.removeToast(props.id)
+        }, 2000)
     });
 
 </script>
@@ -22,7 +33,7 @@
         </div>
         <div class="ml-3 text-sm font-normal">{{ props.message }}</div>
         <button type="button"
-            @click="$emit('removeToast', props.key)"
+            @click="$emit('removeToast', props.id)"
             class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             aria-label="Close">
             <span class="sr-only">Close</span>

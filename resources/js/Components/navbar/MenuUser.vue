@@ -56,10 +56,13 @@
         </div>
         <div class="flex flex-col cursor-pointer" v-else>
             <menu-item @click="logOut">Log Out</menu-item>
+            <menu-item @click="logOut">Log Out</menu-item>
         </div>
     </div>
 
     <LoginForm :showModal="showLoginForm" @closeLoginForm="closeLoginForm"/>
+
+    <LoginForm :showModal="false" @closeLoginForm=""/>
 
 </template>
 
@@ -67,10 +70,13 @@
 
     import { onMounted, onUnmounted, ref } from 'vue';
     import { router, usePage } from '@inertiajs/vue3'
+    import { useNotification } from '@/Stores/notification.js';
 
     import Avatar from '@/Components/Avatar.vue'
     import MenuItem from '@/Components/navbar/MenuItem.vue'
     import LoginForm from '../auth/LoginForm.vue';
+
+    const store = useNotification();
 
     const user = usePage().props.auth.user;
 
@@ -87,6 +93,7 @@
     {
         router.visit('/app/logout', { method: 'post' });
         router.visit(route('home'));
+        store.addToast({message: 'Success'})
     }
 
     onMounted(() => {

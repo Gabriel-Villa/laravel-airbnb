@@ -4,6 +4,7 @@ import 'flowbite';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
+import { createPinia } from 'pinia'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
@@ -54,6 +55,7 @@ createInertiaApp({
             .use(plugin)
             .component('font-awesome-icon', FontAwesomeIcon)
             .use(ZiggyVue, Ziggy)
+            .use(createPinia())
             .mount(el);
     },
     progress: {
