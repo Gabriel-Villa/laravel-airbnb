@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Listing;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function home(Request $request)
+    public function __invoke(Request $request)
     {
-        return inertia('Home', [
-            'users' => User::query()
-                ->when($request->filled('search'), function ($query) use ($request) {
+        $query = Listing::with(['location', 'category'])
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->whereHas('category',function($query) use($request) {
                     $query->where('name', 'like', "%" . $request->search . "%");
-                })
-                ->paginate(30)
-                ->withQueryString()
-                ->through(fn ($u) => [
-                    'id' => $u->id,
-                    'name' => $u->name,
-                ]),
+                });
+            })
+            ->paginate(30)
+            ->withQueryString()
+            ->through(fn ($u) => [
+                'id' => $u->id,
+                'name' => $u->name,
+            ]);
+
+
+        return inertia('Home', [
+            'listings' => $query,
 
             'filters' => $request->only(['search'])
         ]);

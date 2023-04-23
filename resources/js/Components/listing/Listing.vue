@@ -1,0 +1,30 @@
+<template>
+    <div class="col-span-1 cursor-pointer">
+        <div class="flex gap-2 w-full">
+            <div class="aspect-square w-full relative overflow-hidden rounded-xl">
+                <img class="object-cover h-full w-full hover:scale-110 transition"
+                    src="https://a0.muscache.com/im/pictures/miso/Hosting-29459696/original/d13b86bf-4f1c-43f0-a44e-8a9edfda26f1.jpeg?im_w=720" />
+                <font-awesome-icon icon="fa-solid fa-heart" class="fill-white absolute -top[2px] -right-[2px]" />
+            </div>
+        </div>
+        <div class="font-semibold text-lg mt-2">
+            {{ props.location }}
+        </div>
+        <div class="font-light text-neutral-500">
+            {{ props.category }}
+        </div>
+        <div class="flex items-center gap-1 mt-1">
+            <div class="font-semibold">
+                500 S/
+            </div>
+            <div class="font-ligth">
+                Nigth
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+    const props = defineProps(['location', 'category']);
+</script>
+

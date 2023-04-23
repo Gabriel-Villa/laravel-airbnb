@@ -10,8 +10,8 @@
         hover:text-neutral-800
         transition
    "
-   :disabled="$page.props.filters.search === name"
-   :class="$page.props.filters.search == name ? 'border-b-neutral-800 text-neutral-800 cursor-not-allowed' : 'border-transparent text-neutral-500'"
+   :disabled="$page.props.filters?.search === name"
+   :class="$page.props.filters?.search == name ? 'border-b-neutral-800 text-neutral-800 cursor-not-allowed' : 'border-transparent text-neutral-500'"
    @click.stop.prevent="$emit('querySearch', { id, name })"
    >
        <font-awesome-icon class="text-sm" :icon="icon" disabled />
@@ -23,6 +23,11 @@
 </template>
 
 <script setup>
+
+    import { usePage } from '@inertiajs/vue3'
+
+    console.log(usePage());
+
     const props = defineProps({
         id: {
             required: true

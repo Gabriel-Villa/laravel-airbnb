@@ -1,12 +1,6 @@
 <template>
     <div class="">
         <div class="flex flex-row items-center gap-3">
-            <div
-                class="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
-                <template v-if="user">
-                    {{ user.name }}
-                </template>
-            </div>
             <div class="
                 flex
                 justify-between
@@ -49,14 +43,23 @@
             top-20
             right-20
             text-sm
+            z-10
         ">
         <div class="flex flex-col cursor-pointer" v-if="!user">
             <menu-item @click="toggleLoginForm">Login</menu-item>
             <menu-item>Sing up</menu-item>
         </div>
         <div class="flex flex-col cursor-pointer" v-else>
+
+            <div
+                class="text-sm font-semibold py-3 px-4 hover:bg-neutral-100 transition cursor-pointer text-center border-b-2 border-neutral-200">
+                <template v-if="user">
+                    {{ user.name }}
+                </template>
+            </div>
+
             <menu-item @click="logOut">Log Out</menu-item>
-            <menu-item @click="logOut">Log Out</menu-item>
+            <menu-item @click="router.visit(route('listing.index'))">Add your Space</menu-item>
         </div>
     </div>
 
@@ -91,7 +94,7 @@
 
     function logOut()
     {
-        router.visit('/app/logout', { method: 'post' });
+        router.visit(route('app.logout'), { method: 'post' });
         router.visit(route('home'));
         store.addToast({message: 'Success'})
     }

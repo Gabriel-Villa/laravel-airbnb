@@ -59,7 +59,7 @@
     import { defineProps } from 'vue';
     import DialogModal from '@/Components/DialogModal.vue';
     import TextInput from '@/Components/TextInput.vue';
-    import { router, useForm, Link } from '@inertiajs/vue3';
+    import { router, useForm } from '@inertiajs/vue3';
     import InputError from '../InputError.vue';
 
     import { useNotification } from '@/Stores/notification.js';
@@ -80,14 +80,13 @@
 
     const submit = () =>
     {
-        let url = route('login.post');
+        let url = route('app.login');
 
         form.post(url, {
             onSuccess: (res) => {
                 router.visit(route('home'))
                 emit('closeLoginForm');
                 store.addToast({message: 'Login successfull'});
-                // successToast({message: 'Login successfull'});
             },
             onError : (err) => {
                 errorToast({message: 'Please try again'});
