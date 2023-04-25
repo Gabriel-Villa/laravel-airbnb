@@ -8,6 +8,7 @@
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^2.0",
         "beyondcode/laravel-websockets": "^1.14",
+        "cloudinary-labs/cloudinary-laravel": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.8",
         "intervention/image": "^2.7",

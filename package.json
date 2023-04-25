@@ -25,9 +25,11 @@
         "@fortawesome/free-regular-svg-icons": "^6.4.0",
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^3.0.3",
-        "form-wizard-vue3": "^1.1.0",
+        "leaflet": "^1.9.3",
         "moment": "^2.29.4",
         "pinia": "^2.0.34",
-        "vue3-toastify": "^0.1.6"
+        "vue-select": "^4.0.0-beta.6",
+        "vue3-toastify": "^0.1.6",
+        "world-countries": "^4.0.0"
     }
 }

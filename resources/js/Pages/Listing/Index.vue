@@ -1,14 +1,15 @@
 <template>
     <Container>
 
+
         <div class="w-full py-4">
             <div class="flex justify-between align-center">
                 <Logo />
             </div>
         </div>
 
-        <div class="text-center mt-20 flex justify-center w-3/6 mx-auto">
-            <div class="w-10/12 mt-12">
+        <!-- <div class="text-center mt-20 flex justify-center w-3/6 mx-auto">
+            <div class="w-7/12 mt-12">
                 <div v-show="!showModalListing">
                     <h1 class="text-6xl font-bold text-[#FF385C]">
                         Put in Airbnb.
@@ -33,14 +34,14 @@
                         </p>
                     </button>
                 </div>
-
-
-                <transition name="fade">
-                   <Form v-if="showModalListing" />
-                </transition>
-
             </div>
-        </div>
+        </div> -->
+
+        <transition>
+            <div class="mt-20 flex justify-center" >
+                <CreateListingForm  />
+            </div>
+        </transition>
 
     </Container>
 </template>
@@ -49,14 +50,13 @@
 
     import Container from '@/Components/Container.vue';
     import Logo from '@/Components/navbar/Logo.vue';
-    import Form from '@/Components/listing/CreateListingForm.vue'
+    import CreateListingForm from '@/Components/listing/CreateListingForm.vue'
     import { computed, ref } from 'vue';
 
     import moment from 'moment';
 
     const currentValue = ref(7);
     const price = ref(181);
-    const showModalListing = ref(false);
     const showcurrentValue = ref(false);
     const lastDayOfMonth = ref(moment().endOf('month').format('D'));
 
@@ -64,8 +64,16 @@
         return price.value * currentValue.value
     });
 
-    function updateCurrentValue(event) {
-        currentValue.value = event.target.value;
-        showcurrentValue.value = true;
-    }
 </script>
+
+<style scoped>
+    .v-enter-active,
+    .v-leave-active {
+        transition: opacity 0.5s ease;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+        opacity: 0;
+    }
+</style>

@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue';
 import path from 'path'
 
 export default defineConfig({
+    optimizeDeps: {
+        exclude: ['js-big-decimal']
+    },
     plugins: [
         laravel({
             input: 'resources/js/app.js',
