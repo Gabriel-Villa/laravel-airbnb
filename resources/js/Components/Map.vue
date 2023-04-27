@@ -4,8 +4,8 @@
 
 <script setup>
     import leaflet from 'leaflet';
-
-    import { computed, onMounted, onUpdated } from 'vue';
+    import { useCountries } from '@/Composables/countries.js';
+    import { onMounted, onUpdated } from 'vue';
 
     const props = defineProps(['latlng']);
 
@@ -24,15 +24,12 @@
         const data = props.latlng;
         let locationArray;
 
-        if(data.length > 0){
-            locationArray = data.split(",");
-        }else{
-            locationArray = ["-10", "50"];
-        }
+        locationArray = data.length > 0
+            ? useCountries().getByValue(data).latlng
+            : ["-10", "50"]
 
         return locationArray;
     }
-
 
     function removeMarkers()
     {

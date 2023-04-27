@@ -1,6 +1,7 @@
 <template>
     <Container>
 
+        <ToastList />
 
         <div class="w-full py-4">
             <div class="flex justify-between align-center">
@@ -50,6 +51,7 @@
 
     import Container from '@/Components/Container.vue';
     import Logo from '@/Components/navbar/Logo.vue';
+    import ToastList from '@/Components/ToastList.vue';
     import CreateListingForm from '@/Components/listing/CreateListingForm.vue'
     import { computed, ref } from 'vue';
 

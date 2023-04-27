@@ -15,7 +15,7 @@ export function useCountries()
 
     const getByValue = (value) =>
     {
-        return formatCountries.find((item) => item.value === value);
+        return formatCountries.find((item) => item.id === value);
     }
 
     return { getAll, getByValue }

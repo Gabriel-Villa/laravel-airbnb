@@ -189,6 +189,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -223,6 +224,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Pdf' => Barryvdh\DomPDF\Facade\Pdf::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
     ])->toArray(),
 
 ];

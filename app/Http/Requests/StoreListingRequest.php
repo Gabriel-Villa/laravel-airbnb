@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Location;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreListingRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreListingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,21 @@ class StoreListingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category' => 'required|exists:category,id',
+            'location' => 'required|exists:location,id',
+            'guestCount' => 'required|min:1',
+            'roomCount' => 'required|min:1',
+            'bathroomCount' => 'required|min:1',
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'image' => 'required',
+            'price' => 'required|min:1',
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge(['location' => Location::where('code', $this->location)->first()->id]);
+    }
+
 }

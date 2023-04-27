@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title', 200)->index()->comment("Name of the listing");
             $table->text('description')->nullable();
-            $table->integer('roomCount')->nullable();
-            $table->integer('bathroomCount')->nullable();
-            $table->integer('guestCount')->nullable();
+            $table->integer('roomCount')->default(1);
+            $table->integer('bathroomCount')->default(1);
+            $table->integer('guestCount')->default(1);
+            $table->float('price', 8, 2);
 
             $table->unsignedBigInteger('locationId');
             $table->foreign('locationId')->references('id')->on('location');

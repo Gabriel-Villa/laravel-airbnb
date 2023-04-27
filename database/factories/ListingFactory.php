@@ -22,9 +22,10 @@ class ListingFactory extends Factory
         return [
             'title' => $this->faker->text(100),
             'description' => $this->faker->text(200),
-            'roomCount' => rand(1,8),
-            'bathroomCount' => rand(1,8),
-            'guestCount' => rand(1,20),
+            'roomCount' => $this->numberBetween(1, 8),
+            'bathroomCount' => $this->numberBetween(1, 8),
+            'guestCount' => $this->numberBetween(1, 20),
+            'price' => $this->faker->randomFloat(2, 100, 30000),
             'locationId' => Location::inRandomOrder()->first()->id,
             'categoryId' => Category::inRandomOrder()->first()->id,
             'userId' => User::inRandomOrder()->first()->id,

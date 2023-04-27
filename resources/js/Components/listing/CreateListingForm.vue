@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="submit" class="w-4/5">
 
-        <div v-if="currentStep == 1">
+        <div v-if="currentStep == steps.CATEGORY">
             <div class="flex flex-col">
                 <Heading title="Which of these best describes your place?" subtitle="Pick a category" />
 
@@ -17,24 +17,21 @@
             </div>
         </div>
 
-        <div v-if="currentStep == 2">
+        <div v-if="currentStep == steps.LOCATION">
             <Heading title="Where is your place located?" subtitle="Help guest find you!" />
             <!-- <CountrySelect /> -->
-            <v-select v-model="location" placeholder="Select a location" label="label" :options="getAll()" value="label"
-                :reduce="country => `${country.latlng}`" class="mt-4" />
-            <!-- <template #option="{ label, flag }">
-                        <div class="flex items-center gap-3">
-                            <div>{{ flag }}</div>
-                            <span class="text-neutral-800 ml-1">
-                                {{ label }}
-                            </span>
-                        </div>
-                    </template> -->
-            <!-- </v-select> -->
+            <v-select
+                v-model="location"
+                placeholder="Select a location"
+                label="label" :options="getAll()"
+                value="label"
+                :reduce="country => `${country.id}`" class="mt-4"
+            />
+
             <Map :latlng="location" />
         </div>
 
-        <div v-show="currentStep == 3">
+        <div v-show="currentStep == steps.DETAIL_LIVING">
             <div class="flex flex-col">
                 <Heading title="Share some basics about your place?" subtitle="What amenities do you have?" />
 
@@ -50,7 +47,7 @@
             </div>
         </div>
 
-        <div v-if="currentStep == 4">
+        <div v-if="currentStep == steps.DESCRIPTION">
             <div class="flex flex-col">
                 <Heading title="How would you describe your place?" subtitle="Short and sweet works best!" />
 
@@ -61,18 +58,32 @@
             </div>
         </div>
 
-        <div v-if="currentStep == 5">
+        <div v-show="currentStep == steps.IMAGES">
             <div class="flex flex-col">
                 <Heading title="Add a photo of your place" subtitle="Show guests what your place looks like!" />
+
+                <div id="my-dropzone" class="dropzone"></div>
+                <div id="previews" class="flex justify-center mt-2"></div>
+            </div>
+        </div>
+
+        <div v-if="currentStep == steps.PRICES">
+            <div class="flex flex-col">
+                <Heading title="Now, set your price" subtitle="How much do you charge per night?" />
+
+                <TextInput id="price" v-model="price" placeholder="Price:" type="number" class="my-2 block w-full" />
             </div>
         </div>
 
         <div class="flex justify-between align-middle mt-2">
-            <PrimaryButton v-if="currentStep > 1" @click="previousStep">
+            <PrimaryButton type="button" v-if="currentStep > 1" @click="previousStep">
                 Previous
             </PrimaryButton>
-            <DangerButton @click="nextStep">
+            <DangerButton type="button" @click="nextStep" v-if="currentStep < totalSteps">
                 Continue
+            </DangerButton>
+            <DangerButton type="submit" v-if="currentStep === totalSteps" :class="{ 'bg-red-300' : processingForm }">
+                Save
             </DangerButton>
         </div>
 
@@ -80,7 +91,13 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { computed, onMounted, reactive, ref } from 'vue';
+    import { useForm, router } from "@inertiajs/vue3";
+    import { useNotification } from '@/Stores/notification.js';
+
+    const store = useNotification();
+
+    import Dropzone from "dropzone";
     import CountrySelect from '@/Components/CountrySelect.vue'
     import TextInput from '@/Components/TextInput.vue';
     import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -91,6 +108,8 @@
     import Heading from '@/Components/Heading.vue';
     import Counter from '@/Components/Counter.vue';
 
+    const processingForm = ref(false);
+
     const currentStep = ref(1);
     const category = ref('');
     const location = ref([]);
@@ -99,12 +118,52 @@
     const bathroomCount = ref(1);
     const title = ref('');
     const description = ref('');
+    const price = ref();
+
+    const steps = reactive({
+        "CATEGORY": 1,
+        "LOCATION": 2,
+        "DETAIL_LIVING": 3,
+        "DESCRIPTION": 4,
+        "IMAGES": 5,
+        "PRICES": 6,
+    });
 
     const { getAll } = useCountries();
 
-    onMounted(() => {
-        console.log("MOunted");
+    const totalSteps = computed(() =>
+    {
+        return Object.keys(steps).length;
     });
+
+    let myDropzone = '';
+
+    onMounted(() => {
+        myDropzone = new Dropzone("div.dropzone", {
+            autoProcessQueue: false,
+            thumbnailWidth: 100,
+            thumbnailHeight: 100,
+            previewsContainer: "#previews",
+            paramName: "file",
+            maxFilesize: 4,
+            renameFile: function (file) {
+                var dt = new Date();
+                var time = dt.getTime();
+                return time + file.name;
+            },
+            acceptedFiles: ".jpeg,.jpg,.png",
+            url: "/listing",
+            addRemoveLinks: true,
+            clickable: true,
+            dictDefaultMessage: "Drag your files here",
+            dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+            dictInvalidFileType: "You can't upload files of this type.",
+        });
+        myDropzone.on("addedfile", function (file) {
+            console.log("Archivo agregado: ", file.name);
+        });
+    })
+
 
     function nextStep() {
         currentStep.value++;
@@ -114,8 +173,35 @@
         currentStep.value--;
     }
 
-        // function submit(event)
-        // {
-        //    const data = Object.fromEntries(new FormData(event.target));
-        // }
+    function submit()
+    {
+        processingForm.value = true;
+
+        const form = useForm({
+            category: category.value,
+            location: location.value,
+            guestCount: guestCount.value,
+            roomCount: roomCount.value,
+            bathroomCount: bathroomCount.value,
+            title: title.value,
+            description: description.value,
+            image: myDropzone.files,
+            price: price.value
+        });
+
+        form.post('/listing', {
+            preserveScroll: true,
+            onSuccess: (res) => {
+                store.addToast({message: res.props.flash.toast});
+                router.visit(route('home'));
+            },
+            onError: (err) => {
+                for (let key in err)
+                {
+                    store.addToast({message: err[key]});
+                }
+            },
+            onFinish: visit => processingForm.value = false
+        });
+    }
 </script>
