@@ -1,4 +1,6 @@
 <template>
+    <Head title="Put your space in airbnb" />
+
     <Container>
 
         <ToastList />
@@ -9,9 +11,9 @@
             </div>
         </div>
 
-        <!-- <div class="text-center mt-20 flex justify-center w-3/6 mx-auto">
+        <div class="text-center mt-20 flex justify-center w-3/6 mx-auto">
             <div class="w-7/12 mt-12">
-                <div v-show="!showModalListing">
+                <div v-show="!showFormListing">
                     <h1 class="text-6xl font-bold text-[#FF385C]">
                         Put in Airbnb.
                     </h1>
@@ -27,8 +29,7 @@
                         @input="updateCurrentValue" @change="showcurrentValue = false"
                         class="w-full mt-8 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-                    <button
-                        @click="showModalListing = true"
+                    <button @click="showFormListing = true"
                         class="my-4 rounded-lg bg-gradient-to-r from-[#e61e4d] via-[#d70466] to-[#bd1e59] text-white px-4 py-3">
                         <p class="font-semibold">
                             <font-awesome-icon icon="fa-solid fa-house" /> Start
@@ -36,19 +37,17 @@
                     </button>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <transition>
-            <div class="mt-20 flex justify-center" >
-                <CreateListingForm  />
-            </div>
+            <CreateListingForm v-if="showFormListing" />
         </transition>
 
     </Container>
 </template>
 
 <script setup>
-
+    import { Head } from '@inertiajs/vue3';
     import Container from '@/Components/Container.vue';
     import Logo from '@/Components/navbar/Logo.vue';
     import ToastList from '@/Components/ToastList.vue';
@@ -60,12 +59,12 @@
     const currentValue = ref(7);
     const price = ref(181);
     const showcurrentValue = ref(false);
+    const showFormListing = ref(false);
     const lastDayOfMonth = ref(moment().endOf('month').format('D'));
 
     const totalPrice = computed(() => {
         return price.value * currentValue.value
     });
-
 </script>
 
 <style scoped>

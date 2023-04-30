@@ -20,15 +20,15 @@ class ListingService
     public function storeListing(array $data, $userId): Listing
     {
         return Listing::create([
-            'categoryId' =>  $data['category'],
-            'locationId' =>  $data['location'],
-            'guestCount' =>  $data['guestCount'],
+            'categoryId' => $data['category'],
+            'locationId' => $data['location'],
+            'guestCount' => $data['guestCount'],
             'roomCount' =>  $data['roomCount'],
-            'bathroomCount' =>  $data['bathroomCount'],
-            'title' =>  $data['title'],
-            'description' =>  $data['description'],
-            'price' =>  $data['price'],
-            'userId' =>  $userId,
+            'bathroomCount' => $data['bathroomCount'],
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'price' => $data['price'],
+            'userId' => $userId,
         ]);
     }
 

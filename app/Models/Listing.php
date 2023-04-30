@@ -23,6 +23,7 @@ class Listing extends Model
         'locationId',
         'categoryId',
         'userId',
+        'price',
     ];
 
     public function location(): BelongsTo

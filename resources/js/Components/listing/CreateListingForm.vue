@@ -1,93 +1,94 @@
 <template>
-    <form @submit.prevent="submit" class="w-4/5">
+    <div class="flex justify-center">
+        <form @submit.prevent="submit" class="w-4/5">
+            <div v-if="currentStep == steps.CATEGORY">
+                <div class="flex flex-col">
+                    <Heading title="Which of these best describes your place?" subtitle="Pick a category" />
 
-        <div v-if="currentStep == steps.CATEGORY">
-            <div class="flex flex-col">
-                <Heading title="Which of these best describes your place?" subtitle="Pick a category" />
-
-                <div class="grid grid-cols-5 gap-4 mt-4">
-                    <template v-for="cat in $page.props.categories">
-                        <div :class="{ 'border-black': cat.id === category }" @click="category = cat.id"
-                            class="shadow rounded-xl border-2 p-4 transition cursor-pointer hover:border-black justify-between">
-                            <font-awesome-icon class="text-sm" :icon="cat.icon" disabled />
-                            <div class="font-semibold">{{ cat.name }}</div>
-                        </div>
-                    </template>
+                    <div class="grid grid-cols-5 gap-4 mt-4">
+                        <template v-for="cat in $page.props.categories">
+                            <div :class="{ 'border-black': cat.id === category }" @click="category = cat.id"
+                                class="shadow rounded-xl border-2 p-4 transition cursor-pointer hover:border-black justify-between">
+                                <font-awesome-icon class="text-sm" :icon="cat.icon" disabled />
+                                <div class="font-semibold">{{ cat.name }}</div>
+                            </div>
+                        </template>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div v-if="currentStep == steps.LOCATION">
-            <Heading title="Where is your place located?" subtitle="Help guest find you!" />
-            <!-- <CountrySelect /> -->
-            <v-select
-                v-model="location"
-                placeholder="Select a location"
-                label="label" :options="getAll()"
-                value="label"
-                :reduce="country => `${country.id}`" class="mt-4"
-            />
+            <div v-if="currentStep == steps.LOCATION">
+                <Heading title="Where is your place located?" subtitle="Help guest find you!" />
+                <!-- <CountrySelect /> -->
+                <v-select
+                    v-model="location"
+                    placeholder="Select a location"
+                    label="label" :options="getAll()"
+                    value="label"
+                    :reduce="country => `${country.id}`" class="mt-4"
+                />
 
-            <Map :latlng="location" />
-        </div>
-
-        <div v-show="currentStep == steps.DETAIL_LIVING">
-            <div class="flex flex-col">
-                <Heading title="Share some basics about your place?" subtitle="What amenities do you have?" />
-
-                <br>
-
-                <Counter title="Guests" subtitle="How many guests do you allow?"
-                    @countChange="(n) => guestCount = n.value" />
-
-                <Counter title="Rooms" subtitle="How many rooms do you have??" @countChange="(n) => roomCount = n.value" />
-
-                <Counter title="Bathrooms" subtitle="How many bathrooms do you have??"
-                    @countChange="(n) => bathroomCount = n.value" />
+                <Map :latlng="location" />
             </div>
-        </div>
 
-        <div v-if="currentStep == steps.DESCRIPTION">
-            <div class="flex flex-col">
-                <Heading title="How would you describe your place?" subtitle="Short and sweet works best!" />
+            <div v-show="currentStep == steps.DETAIL_LIVING">
+                <div class="flex flex-col">
+                    <Heading title="Share some basics about your place?" subtitle="What amenities do you have?" />
 
-                <TextInput id="title" v-model="title" placeholder="Title:" type="text" class="my-2 block w-full" />
+                    <br>
 
-                <TextInput id="descripcion" v-model="description" placeholder="Description:" type="text"
-                    class="my-2 block w-full" />
+                    <Counter title="Guests" subtitle="How many guests do you allow?"
+                        @countChange="(n) => guestCount = n.value" />
+
+                    <Counter title="Rooms" subtitle="How many rooms do you have??" @countChange="(n) => roomCount = n.value" />
+
+                    <Counter title="Bathrooms" subtitle="How many bathrooms do you have??"
+                        @countChange="(n) => bathroomCount = n.value" />
+                </div>
             </div>
-        </div>
 
-        <div v-show="currentStep == steps.IMAGES">
-            <div class="flex flex-col">
-                <Heading title="Add a photo of your place" subtitle="Show guests what your place looks like!" />
+            <div v-if="currentStep == steps.DESCRIPTION">
+                <div class="flex flex-col">
+                    <Heading title="How would you describe your place?" subtitle="Short and sweet works best!" />
 
-                <div id="my-dropzone" class="dropzone"></div>
-                <div id="previews" class="flex justify-center mt-2"></div>
+                    <TextInput id="title" v-model="title" placeholder="Title:" type="text" class="my-2 block w-full" />
+
+                    <TextInput id="descripcion" v-model="description" placeholder="Description:" type="text"
+                        class="my-2 block w-full" />
+                </div>
             </div>
-        </div>
 
-        <div v-if="currentStep == steps.PRICES">
-            <div class="flex flex-col">
-                <Heading title="Now, set your price" subtitle="How much do you charge per night?" />
+            <div v-show="currentStep == steps.IMAGES">
+                <div class="flex flex-col">
+                    <Heading title="Add a photo of your place" subtitle="Show guests what your place looks like!" />
 
-                <TextInput id="price" v-model="price" placeholder="Price:" type="number" class="my-2 block w-full" />
+                    <div id="my-dropzone" class="dropzone"></div>
+                    <div id="previews" class="flex justify-center mt-2"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="flex justify-between align-middle mt-2">
-            <PrimaryButton type="button" v-if="currentStep > 1" @click="previousStep">
-                Previous
-            </PrimaryButton>
-            <DangerButton type="button" @click="nextStep" v-if="currentStep < totalSteps">
-                Continue
-            </DangerButton>
-            <DangerButton type="submit" v-if="currentStep === totalSteps" :class="{ 'bg-red-300' : processingForm }">
-                Save
-            </DangerButton>
-        </div>
+            <div v-if="currentStep == steps.PRICES">
+                <div class="flex flex-col">
+                    <Heading title="Now, set your price" subtitle="How much do you charge per night?" />
 
-    </form>
+                    <TextInput id="price" v-model="price" placeholder="Price:" type="number" class="my-2 block w-full" />
+                </div>
+            </div>
+
+            <div class="flex justify-between align-middle mt-2">
+                <PrimaryButton type="button" v-if="currentStep > 1" @click="previousStep">
+                    Previous
+                </PrimaryButton>
+                <DangerButton type="button" @click="nextStep" v-if="currentStep < totalSteps">
+                    Continue
+                </DangerButton>
+                <DangerButton type="submit" v-if="currentStep === totalSteps" :class="{ 'bg-red-300' : processingForm }">
+                    Save
+                </DangerButton>
+            </div>
+
+        </form>
+    </div>
 </template>
 
 <script setup>
@@ -98,7 +99,6 @@
     const store = useNotification();
 
     import Dropzone from "dropzone";
-    import CountrySelect from '@/Components/CountrySelect.vue'
     import TextInput from '@/Components/TextInput.vue';
     import PrimaryButton from '@/Components/PrimaryButton.vue';
     import DangerButton from '@/Components/DangerButton.vue';

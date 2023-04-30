@@ -37,7 +37,7 @@ class StoreListingRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge(['location' => Location::where('code', $this->location)->first()->id]);
+        $this->merge(['location' => Location::where('code', $this->location)->firstOrFail()->id]);
     }
 
 }

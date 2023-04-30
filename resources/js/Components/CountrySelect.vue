@@ -1,14 +1,6 @@
 <template>
-    <v-select placeholder="Choose a country" label="label" :options="countries" v-model="countrySelected" class="mt-4">
-        <template #option="{ label, flag }">
-            <div class="flex items-center gap-3">
-                <div>{{ flag }}</div>
-                <span class="text-neutral-800 ml-1">
-                    {{ label }}
-                </span>
-            </div>
-        </template>
-    </v-select>
+    <v-select v-model="location" placeholder="Select a location" label="label" :options="getAll()" value="label"
+        :reduce="country => `${country.id}`" class="mt-4" />
 </template>
 
 <script setup>
