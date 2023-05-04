@@ -4,7 +4,13 @@
         <div class="flex gap-2 w-full">
             <div class="aspect-square w-full relative overflow-hidden rounded-xl">
                 <img class="object-cover h-full w-full hover:scale-110 transition"
-                    :src="props.image" alt="Image living" height="400" width="400" />
+                    rel="preload"
+                    as="image"
+                    :src="props.image"
+                    alt="Image living"
+                    height="400"
+                    width="400"
+                />
                 <font-awesome-icon icon="fa-solid fa-heart" class="fill-white absolute -top[2px] -right-[2px]" />
             </div>
         </div>

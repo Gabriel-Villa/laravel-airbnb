@@ -23,11 +23,6 @@
 </template>
 
 <script setup>
-
-    import { usePage } from '@inertiajs/vue3'
-
-    console.log(usePage());
-
     const props = defineProps({
         id: {
             required: true

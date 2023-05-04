@@ -159,7 +159,7 @@
             dictInvalidFileType: "You can't upload files of this type.",
         });
         myDropzone.on("addedfile", function (file) {
-            console.log("Archivo agregado: ", file.name);
+            // console.log("Archivo agregado: ", file.name);
         });
     })
 
