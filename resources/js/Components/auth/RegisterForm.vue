@@ -89,7 +89,7 @@
                 store.addToast({message: 'Register successfull'});
             },
             onError : (err) => {
-                errorToast({message: 'Please try again'});
+                errorToast({message: 'Please try again', type: 'error'});
             }
         });
 

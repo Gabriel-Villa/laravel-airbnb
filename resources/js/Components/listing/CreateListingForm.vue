@@ -193,7 +193,7 @@
             onError: (err) => {
                 for (let key in err)
                 {
-                    store.addToast({message: err[key]});
+                    store.addToast({message: err[key], type: 'error'});
                 }
             },
             onFinish: visit => processingForm.value = false

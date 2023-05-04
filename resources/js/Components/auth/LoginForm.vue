@@ -73,10 +73,7 @@
         errors: Object
     });
 
-    const form = useForm({
-        email: "dev@gmail.com",
-        password: "1234",
-    });
+    const form = useForm({email: "", password: ""});
 
     const submit = () =>
     {
@@ -89,7 +86,7 @@
                 store.addToast({message: 'Login successfull'});
             },
             onError : (err) => {
-                errorToast({message: 'Please try again'});
+                store.addToast({message: 'Please try again', type: 'error'});
             }
         });
 
