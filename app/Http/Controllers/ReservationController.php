@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReservationRequest;
 use App\Models\Listing;
-use App\Models\Reservation;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
 
-    public function store(StoreReservationRequest $request,ReservationService $reservationService)
+    public function store(StoreReservationRequest $request, ReservationService $reservationService)
     {
         try {
 
@@ -23,7 +22,7 @@ class ReservationController extends Controller
                 endDate: $request->endDate
             );
 
-            $reservation = $reservationService->saveReservation($request->validated(), $totalAmount);
+            $reservationService->saveReservation($request->validated(), $totalAmount);
 
             return redirect()->route('home')->with('toast', 'Successfully reserved');
 
