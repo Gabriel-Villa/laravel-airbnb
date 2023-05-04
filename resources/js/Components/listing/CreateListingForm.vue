@@ -19,7 +19,7 @@
 
             <div v-if="currentStep == steps.LOCATION">
                 <Heading title="Where is your place located?" subtitle="Help guest find you!" />
-                <!-- <CountrySelect /> -->
+
                 <v-select
                     v-model="location"
                     placeholder="Select a location"
@@ -94,19 +94,16 @@
 <script setup>
     import { computed, onMounted, reactive, ref } from 'vue';
     import { useForm, router } from "@inertiajs/vue3";
-    import { useNotification } from '@/Stores/notification.js';
-
-    const store = useNotification();
-
-    import Dropzone from "dropzone";
-    import TextInput from '@/Components/TextInput.vue';
-    import PrimaryButton from '@/Components/PrimaryButton.vue';
-    import DangerButton from '@/Components/DangerButton.vue';
     import { useCountries } from '@/Composables/countries.js';
-    import Map from '@/Components/Map.vue'
+    import { useNotification } from '@/Stores/notification.js';
+    import Dropzone from "dropzone";
 
-    import Heading from '@/Components/Heading.vue';
     import Counter from '@/Components/Counter.vue';
+    import DangerButton from '@/Components/DangerButton.vue';
+    import Heading from '@/Components/Heading.vue';
+    import Map from '@/Components/Map.vue'
+    import PrimaryButton from '@/Components/PrimaryButton.vue';
+    import TextInput from '@/Components/TextInput.vue';
 
     const processingForm = ref(false);
 
@@ -119,6 +116,8 @@
     const title = ref('');
     const description = ref('');
     const price = ref();
+
+    const store = useNotification();
 
     const steps = reactive({
         "CATEGORY": 1,
@@ -165,13 +164,9 @@
     })
 
 
-    function nextStep() {
-        currentStep.value++;
-    }
+    const nextStep = () => currentStep.value++;
 
-    function previousStep() {
-        currentStep.value--;
-    }
+    const previousStep = () =>  currentStep.value--;
 
     function submit()
     {

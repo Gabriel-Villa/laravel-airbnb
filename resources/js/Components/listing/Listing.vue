@@ -1,5 +1,5 @@
 <template>
-     <Link :href="route('listing.show', props.slug)">
+    <Link :href="route('listing.show', props.slug)">
     <div class="col-span-1 cursor-pointer">
         <div class="flex gap-2 w-full">
             <div class="aspect-square w-full relative overflow-hidden rounded-xl">

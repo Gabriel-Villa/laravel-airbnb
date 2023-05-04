@@ -17,9 +17,9 @@
 </template>
 
 <script setup>
-    import Layout from '@/Layouts/Layout.vue';
     import { defineProps } from 'vue';
 
+    import Layout from '@/Layouts/Layout.vue';
     import Listing from '@/Components/listing/Listing.vue';
 
     const props = defineProps({
@@ -29,5 +29,4 @@
             default: []
         }
     });
-
 </script>

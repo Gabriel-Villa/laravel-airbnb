@@ -1,6 +1,5 @@
 <template>
-
-    <div v-if="$page.url == '/'" class="
+      <div v-if="$page.component.includes('Home')" class="
         pt-4
         flex
         items-center
@@ -20,7 +19,7 @@
 </template>
 
 <script setup>
-    import { router, usePage } from '@inertiajs/vue3'
+    import { router } from '@inertiajs/vue3'
     import CategoryBox from '@/Components/navbar/CategoryBox.vue';
 
     const querySearch = ({id, name}) => router.get(route('home'), { search: name }, { preserveScroll: true })
