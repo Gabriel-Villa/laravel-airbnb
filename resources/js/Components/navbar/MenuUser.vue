@@ -47,7 +47,7 @@
         ">
         <div class="flex flex-col cursor-pointer" v-if="!user">
             <menu-item @click="toggleLoginForm">Login</menu-item>
-            <menu-item>Sing up</menu-item>
+            <menu-item @click="toggleRegisterForm">Sing up</menu-item>
         </div>
         <div class="flex flex-col cursor-pointer" v-else>
 
@@ -65,7 +65,7 @@
 
     <LoginForm :showModal="showLoginForm" @closeLoginForm="closeLoginForm"/>
 
-    <LoginForm :showModal="false" @closeLoginForm=""/>
+    <RegisterForm :showModal="showRegisterForm" @closeRegisterForm="closeRegisterForm"/>
 
 </template>
 
@@ -78,6 +78,7 @@
     import Avatar from '@/Components/Avatar.vue'
     import MenuItem from '@/Components/navbar/MenuItem.vue'
     import LoginForm from '../auth/LoginForm.vue';
+    import RegisterForm from '../auth/RegisterForm.vue';
 
     const store = useNotification();
 
@@ -85,12 +86,23 @@
 
     const showUserMenu = ref(false);
     const showLoginForm = ref(false);
+    const showRegisterForm = ref(false);
 
     function toggleLoginForm()
     {
         showLoginForm.value = true;
         showUserMenu.value = false;
     }
+
+    const closeLoginForm = () => showLoginForm.value = false;
+
+    function toggleRegisterForm()
+    {
+        showRegisterForm.value = true;
+        showUserMenu.value = false;
+    }
+
+    const closeRegisterForm = () => showRegisterForm.value = false;
 
     function logOut()
     {
@@ -109,11 +121,12 @@
 
     function closeDropdown(e)
     {
-        if (!document.getElementById('dropdown-user-menu').contains(e.target)){
+        if (!document.getElementById('dropdown-user-menu').contains(e.target))
+        {
             showUserMenu.value = false;
         }
     }
 
-    const closeLoginForm = () => showLoginForm.value = false;
+
 
 </script>

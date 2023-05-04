@@ -1,7 +1,7 @@
 
 <template>
     <Layout title="Put your space in airbnb">
-        <form @submit.prevent="form.post(route('reservation.store'))">
+        <form @submit.prevent="submit">
             <div class="mt-8 w-4/6 mx-auto">
                 <div class="text-2xl font-bold capitalize">
                     {{ props.listing.title }}
@@ -56,7 +56,7 @@
                             Total: $ {{ totalAmount }}
                         </p>
 
-                        <DangerButton type="submit" class="w-full" v-if="$page.props.auth.user">Reserve</DangerButton>
+                        <DangerButton type="submit" :disabled="form.processing" class="w-full" v-if="$page.props.auth.user">Reserve</DangerButton>
                         <DangerButton class="w-full opacity-25 cursor-not-allowed" v-else>Log in to Reserve</DangerButton>
                     </div>
                 </div>
@@ -107,4 +107,23 @@
             required: true,
         }
     });
+
+    function submit()
+    {
+        form
+            .transform((data) => ({
+                ...data,
+                listingId: props.listing.id
+            }))
+            .post(route('reservation.store'), {
+            preserveScroll: true,
+                onError : (err) => {
+                    store.addToast({ message: 'Try again'});
+                },
+                onSuccess: (res) => {
+                    store.addToast({ message: res.props?.flash?.toast});
+                    form.reset('');
+                },
+            })
+    }
 </script>
