@@ -10,10 +10,13 @@ Route::post('app/logout', [LoginController::class, 'logout'])->name('app.logout'
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::group(['middleware' => 'auth'], function()
-{
-    Route::resource('/listing', ListingController::class);
-});
+Route::resource('/listing', ListingController::class)->middleware('auth')->only(['index', 'store']);
+Route::resource('/listing', ListingController::class)->only(['show']);
 
 Route::get('auth/redirect', [LoginController::class, 'handlerRedirect'])->name('login.redirect');
 Route::get('auth/callback', [LoginController::class, 'handlerCallback'])->name('login.callback');
+
+
+Route::fallback(function () {
+    return redirect()->route('home');
+});

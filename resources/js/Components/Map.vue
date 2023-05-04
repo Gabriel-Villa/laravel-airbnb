@@ -1,11 +1,12 @@
 <template>
-    <div id="mapid" style="height:400px; width: 100%;" class="mt-4 rounded-lg"></div>
+    <div id="mapid" style="height:400px; width: 100%;" class="my-4 rounded-lg"></div>
 </template>
 
 <script setup>
-    import leaflet from 'leaflet';
-    import { useCountries } from '@/Composables/countries.js';
     import { onMounted, onUpdated } from 'vue';
+    import { usePage } from '@inertiajs/vue3';
+    import { useCountries } from '@/Composables/countries.js';
+    import leaflet from 'leaflet';
 
     const props = defineProps(['latlng']);
 
@@ -53,7 +54,7 @@
                 {
                     maxZoom: 18,
                     id: "mapbox/streets-v11",
-                    accessToken: "pk.eyJ1Ijoib3BvbGV4byIsImEiOiJjbDNmOTM2NG4wMmlnM2pteWJuNHZ6MXZrIn0.4nMQc4L5sAB8pjlVzwzopQ",
+                    accessToken: usePage().props.leafletAccessToken,
                 }
             )
             .addTo(mymap);

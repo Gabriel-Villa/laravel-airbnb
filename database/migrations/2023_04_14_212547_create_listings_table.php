@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('listing', function (Blueprint $table) {
             $table->id();
             $table->string('title', 200)->index()->comment("Name of the listing");
+            $table->text('slug')->comment("Slug of the listing");
             $table->text('description')->nullable();
             $table->integer('roomCount')->default(1);
             $table->integer('bathroomCount')->default(1);
             $table->integer('guestCount')->default(1);
-            $table->float('price', 8, 2);
+            $table->integer('price');
 
             $table->unsignedBigInteger('locationId');
             $table->foreign('locationId')->references('id')->on('location');

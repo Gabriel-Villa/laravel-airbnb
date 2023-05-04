@@ -46,6 +46,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'categories' => CategoryResource::collection(Category::getAllCategories()),
             'locations' => LocationResource::collection(Location::all()),
+            'leafletAccessToken' => config('leaflet.access_token')
         ]);
     }
 }

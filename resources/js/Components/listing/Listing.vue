@@ -1,4 +1,5 @@
 <template>
+     <Link :href="route('listing.show', props.slug)">
     <div class="col-span-1 cursor-pointer">
         <div class="flex gap-2 w-full">
             <div class="aspect-square w-full relative overflow-hidden rounded-xl">
@@ -15,16 +16,18 @@
         </div>
         <div class="flex items-center gap-1 mt-1">
             <div class="font-semibold">
-                500 S/
+                $ {{ props.price }}
             </div>
             <div class="font-ligth">
                 Nigth
             </div>
         </div>
     </div>
+</Link>
 </template>
 
 <script setup>
-    const props = defineProps(['location', 'category', 'image']);
+    const props = defineProps(['price', 'title', 'slug', 'location', 'category', 'image']);
+    import { Link } from '@inertiajs/vue3';
 </script>
 

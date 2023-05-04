@@ -21,6 +21,9 @@ class HomeController extends Controller
             ->through(fn ($u) => [
                 'id' => $u->id,
                 'name' => $u->name,
+                'slug' => $u->slug,
+                'price' => $u->price,
+                'title' => $u->title,
                 'category' => $u->category->name ?? '',
                 'location' => $u->location->name ?? '',
                 'image' => $u->image->url ?? '',

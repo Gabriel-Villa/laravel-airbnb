@@ -91,9 +91,9 @@ class ListingPageTest extends TestCase
             'guestCount' => 4,
             'roomCount' => 2,
             'bathroomCount' => 2,
-            'title' => "My space in airbnb",
+            'title' => "My Space In Airbnb",
             'description' => "My space in airbnb description",
-            'price' => 154.50
+            'price' => (154.50 / 100)
         ]);
 
         $response->assertRedirect(route('home'));

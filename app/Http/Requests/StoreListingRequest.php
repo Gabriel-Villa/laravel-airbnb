@@ -31,7 +31,7 @@ class StoreListingRequest extends FormRequest
             'title' => 'required|max:255',
             'description' => 'required',
             'image' => 'required',
-            'price' => 'required|min:1',
+            'price' => 'required|numeric|min:100|max:30000',
         ];
     }
 

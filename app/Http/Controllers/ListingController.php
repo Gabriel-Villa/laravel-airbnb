@@ -14,17 +14,11 @@ use Illuminate\Http\Request;
 class ListingController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return inertia('Listing/Index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreListingRequest $request, ListingService $listingService, ListingImageContext $context)
     {
         $validated = $request->validated();
@@ -37,6 +31,11 @@ class ListingController extends Controller
         }
 
         return redirect()->back()->with('toast', 'Listing create successfully');
+    }
+
+    public function show(Listing $listing)
+    {
+        return inertia('Listing/Show', compact('listing'));
     }
 
 }
