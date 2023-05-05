@@ -4,8 +4,8 @@
 
             <ToastList />
 
-            <div class="text-center mt-20 flex justify-center w-3/6 mx-auto">
-                <div class="w-7/12 mt-12">
+            <div class="text-center mt-20 flex justify-center w-full lg:w-3/6 mx-auto">
+                <div class="w-full lg:w-7/12 mt-12">
                     <div v-show="!showFormListing">
                         <h1 class="text-6xl font-bold text-[#FF385C]">
                             Put in Airbnb.

@@ -9,7 +9,7 @@ use Ramsey\Uuid\Type\Integer;
 class ReservationService
 {
 
-    public function getTotalAmountReservation($listingPrice, $startDate, $endDate): int
+    public function getTotalAmountReservation(int $listingPrice, $startDate, $endDate): int
     {
         $days = daysBetweenDates($startDate, $endDate);
 

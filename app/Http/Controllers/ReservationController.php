@@ -17,7 +17,7 @@ class ReservationController extends Controller
             $listing = Listing::where('id', $request->listingId)->first();
 
             $totalAmount = $reservationService->getTotalAmountReservation(
-                listingPrice: $listing->price,
+                listingPrice: (int) $listing->price,
                 startDate: $request->startDate,
                 endDate: $request->endDate
             );

@@ -7,14 +7,13 @@
                     {{ props.listing.title }}
                 </div>
                 <div class="text-sm font-bold underline my-2">
-                    {{ props?.listing.location?.name }}
+                    {{ props?.listing.location?.name }},  {{ props?.listing.location?.code }}
                 </div>
-                <div class="w-full rounded-xl sm:h-[30vh] md:h-[50vh] relative overflow-hidden">
-                    <img class="object-cover w-full" alt="image" fetchpriority="high" rel="preload"
-                        :src="props.listing.image.url">
+                <div class="w-full rounded-xl hover:scale-100">
+                    <img class="object-cover w-full h-[500px]" alt="image" fetchpriority="high" rel="preload" :src="props.listing.image.url">
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 md:gap-6 mt-6 mb-">
-                    <div class="col-span-2">
+                <div class="grid grid-cols-1 lg:grid-cols-3 md:gap-6 mt-6 mb-">
+                    <div class="col-span-1 lg:col-span-2">
                         <div class="col-span-4 flex flex-col gap-4">
                             <div class="flex flex-col gap-2">
                                 <div class="flex gap-2 text-xl font-semibold">
@@ -38,8 +37,8 @@
                     </div>
                     <div class="shadow p-4 h-72">
                         <div class="flex items-center mb-4">
-                            <h4 class="font-semibold text-md">$ {{ props.listing.price }}</h4>
-                            <span class="text-sm ml-2">nigth</span>
+                            <h4 class="font-semibold text-md">{{ props.listing.price }}</h4>
+                            <span class="text-sm ml-1">- nigth</span>
                         </div>
                         <div class="flex gap-2 flex-col">
                             <div class="w-full">
@@ -53,7 +52,7 @@
                         </div>
 
                         <p class="my-4">
-                            Total: $ {{ totalAmount }}
+                            Total: {{ totalAmount }}
                         </p>
 
                         <DangerButton type="submit" :disabled="form.processing" class="w-full" v-if="$page.props.auth.user">Reserve</DangerButton>
@@ -77,6 +76,16 @@
     import Layout from '@/Layouts/Layout.vue';
     import Map from '@/Components/Map.vue'
 
+    const props = defineProps({
+        listing: {
+            type: Object,
+            required: true,
+        },
+        normalPrice: {
+            type: Number
+        }
+    });
+
     const store = useNotification();
 
     const form = useForm({
@@ -84,28 +93,24 @@
         endDate: moment().format("YYYY-MM-DD"),
     })
 
-    const totalAmount = ref(props.listing.price);
+    const totalAmount = ref(props.normalPrice);
 
     watch(form, (newValue, oldValue) =>
     {
         const start = new Date(newValue.startDate).getTime()
         const end = new Date(newValue.endDate).getTime()
         const diffInMs = end - start
-        let total = Math.floor(diffInMs / 86400000) * props.listing.price;
 
-        if (total <= 0) {
-            store.addToast({ message: 'Please select a correct date range' });
-            total = 0;
+        let total = Math.floor(diffInMs / 86400000) * props.normalPrice;
+
+        if (total <= 0)
+        {
+            store.addToast({ message: 'Please select a correct date range', type: 'error' });
+
+            return false;
         }
 
-        totalAmount.value = total;
-    });
-
-    const props = defineProps({
-        listing: {
-            type: Object,
-            required: true,
-        }
+        totalAmount.value = Math.round(total);
     });
 
     function submit()
@@ -118,7 +123,7 @@
             .post(route('reservation.store'), {
             preserveScroll: true,
                 onError : (err) => {
-                    store.addToast({ message: 'Try again'});
+                    store.addToast({ message: 'Try again', type: 'error'});
                 },
                 onSuccess: (res) => {
                     store.addToast({ message: res.props?.flash?.toast});

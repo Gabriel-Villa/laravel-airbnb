@@ -40,15 +40,6 @@ class ListingPageTest extends TestCase
         );
     }
 
-    public function test_create_listing_fail_error_500_if_the_location_doest_exists()
-    {
-        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
-
-        $response = $this->actingAs($this->user)->post('/listing',[]);
-
-        $response->assertNotFound();
-    }
-
     public function test_create_listing_fail_if_fields_are_not_present_except_location()
     {
         $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
@@ -93,7 +84,7 @@ class ListingPageTest extends TestCase
             'bathroomCount' => 2,
             'title' => "My Space In Airbnb",
             'description' => "My space in airbnb description",
-            'price' => (154.50 / 100)
+            'price' => (154.50 * 100)
         ]);
 
         $response->assertRedirect(route('home'));

@@ -30,22 +30,22 @@ class Listing extends Model
         'price',
     ];
 
-    // protected $casts = [
-    //     'price' => MoneyCast::class
-    // ];
+    protected $casts = [
+        'price' => MoneyCast::class
+    ];
 
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
-    protected function price(): Attribute
-    {
-        return Attribute::make(
-            get: fn (int|float $value) => $value * 100,
-            set: fn (int|float $value) => $value / 100,
-        );
-    }
+    // protected function price(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn (int|float $value) => number_format($value * 100),
+    //         set: fn (int|float $value) => $value / 100,
+    //     );
+    // }
 
     protected function title(): Attribute
     {
@@ -55,6 +55,11 @@ class Listing extends Model
                 'slug' => Str::slug($value, '-'),
             ],
         );
+    }
+
+    public function getPriceWithOutFormat()
+    {
+        return $this->getRawOriginal('price');
     }
 
     protected $with = ['location', 'category', 'user', 'images', 'image'];

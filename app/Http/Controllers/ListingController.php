@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 class ListingController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['index', 'store']);
+    }
+
     public function index()
     {
         return inertia('Listing/Index');
@@ -35,7 +40,10 @@ class ListingController extends Controller
 
     public function show(Listing $listing)
     {
-        return inertia('Listing/Show', compact('listing'));
+        return inertia('Listing/Show', [
+            'listing' => $listing,
+            'normalPrice' => $listing->getPriceWithOutFormat()
+        ]);
     }
 
 }

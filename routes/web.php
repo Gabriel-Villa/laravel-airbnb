@@ -7,14 +7,16 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('app/login', [LoginController::class, 'login'])->name('app.login');
-Route::post('app/logout', [LoginController::class, 'logout'])->name('app.logout');
-Route::post('app/register', RegisterController::class)->name('app.register');
+Route::prefix('app')->as('app.')->group(function()
+{
+    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('register', RegisterController::class)->name('register');
+});
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::resource('/listing', ListingController::class)->middleware('auth')->only(['index', 'store']);
-Route::resource('/listing', ListingController::class)->only(['show']);
+Route::resource('/listing', ListingController::class)->only(['index', 'store', 'show']);
 
 Route::prefix('auth')->group(function()
 {

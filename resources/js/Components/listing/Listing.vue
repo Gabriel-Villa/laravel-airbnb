@@ -22,7 +22,7 @@
         </div>
         <div class="flex items-center gap-1 mt-1">
             <div class="font-semibold">
-                $ {{ props.price }}
+                {{ props.price }}
             </div>
             <div class="font-ligth">
                 Nigth

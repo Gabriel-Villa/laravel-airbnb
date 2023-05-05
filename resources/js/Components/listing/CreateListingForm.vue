@@ -184,13 +184,15 @@
             price: price.value
         });
 
-        form.post('/listing', {
+        form.post(route('listing.store'), {
             preserveScroll: true,
             onSuccess: (res) => {
+                console.log("Res", res);
                 store.addToast({message: res.props.flash.toast});
                 router.visit(route('home'));
             },
             onError: (err) => {
+                console.log("Err", err);
                 for (let key in err)
                 {
                     store.addToast({message: err[key], type: 'error'});

@@ -11,8 +11,10 @@ class HomeController extends Controller
     public function __invoke(Request $request)
     {
         $query = Listing::with(['location', 'category', 'image'])
-            ->when($request->filled('search'), function ($query) use ($request) {
-                $query->whereHas('category',function($query) use($request) {
+            ->when($request->filled('search'), function ($query) use ($request)
+            {
+                $query->whereHas('category',function($query) use($request)
+                {
                     $query->where('name', 'like', "%" . $request->search . "%");
                 });
             })

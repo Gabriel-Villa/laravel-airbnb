@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('roomCount')->default(1);
             $table->integer('bathroomCount')->default(1);
             $table->integer('guestCount')->default(1);
-            $table->integer('price');
+            $table->integer('price')->comment("This value is saved in cents");
 
             $table->unsignedBigInteger('locationId');
             $table->foreign('locationId')->references('id')->on('location');

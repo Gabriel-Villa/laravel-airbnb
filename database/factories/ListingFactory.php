@@ -25,7 +25,7 @@ class ListingFactory extends Factory
             'roomCount' => $this->faker->numberBetween(1, 8),
             'bathroomCount' => $this->faker->numberBetween(1, 8),
             'guestCount' => $this->faker->numberBetween(1, 20),
-            'price' => $this->faker->numberBetween(100, 15000),
+            'price' => $this->faker->numberBetween(1000, 18000),
             'locationId' => Location::inRandomOrder()->first()->id,
             'categoryId' => Category::inRandomOrder()->first()->id,
             'userId' => User::inRandomOrder()->first()->id,
