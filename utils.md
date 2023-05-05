@@ -20,3 +20,7 @@ https://laravel.com/docs/10.x/rate-limiting
 sail bin pint
 ~~~  
 
+5. Publish template emails
+~~~  
+   php artisan vendor:publish --tag=laravel-mail
+~~~  

@@ -6,6 +6,7 @@ use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
@@ -26,15 +27,17 @@ class Reservation extends Model
     ];
 
     protected $casts = [
-        'createdAt' => 'date'
+        'createdAt' => 'date',
+        'startDate' => 'date',
+        'endDate' => 'date',
+        'price' => MoneyCast::class
     ];
 
-    protected function totalPrice(): Attribute
+    protected $with = ['listing'];
+
+    public function listing(): BelongsTo
     {
-        return Attribute::make(
-            get: fn (int|float $value) => $value * 100,
-            set: fn (int|float $value) => $value / 100,
-        );
+        return $this->belongsTo(Listing::class, 'listingId');
     }
 
 }

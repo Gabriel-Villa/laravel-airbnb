@@ -107,6 +107,8 @@
         {
             store.addToast({ message: 'Please select a correct date range', type: 'error' });
 
+            totalAmount.value = 0;
+
             return false;
         }
 

@@ -34,18 +34,12 @@ class Listing extends Model
         'price' => MoneyCast::class
     ];
 
+    protected $with = ['location', 'category', 'user', 'images', 'image'];
+
     public function getRouteKeyName()
     {
         return 'slug';
     }
-
-    // protected function price(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (int|float $value) => number_format($value * 100),
-    //         set: fn (int|float $value) => $value / 100,
-    //     );
-    // }
 
     protected function title(): Attribute
     {
@@ -59,10 +53,8 @@ class Listing extends Model
 
     public function getPriceWithOutFormat()
     {
-        return $this->getRawOriginal('price');
+        return round($this->getRawOriginal('price') / 100);
     }
-
-    protected $with = ['location', 'category', 'user', 'images', 'image'];
 
     public function location(): BelongsTo
     {
