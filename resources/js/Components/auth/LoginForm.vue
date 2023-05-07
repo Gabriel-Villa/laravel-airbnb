@@ -44,7 +44,7 @@
                     class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">o</span>
             </div>
 
-            <a :href="route('login.redirect')" :disabled="form.processing" as="button" class="w-full rounded-lg flex justify-between align-middle px-6 py-2.5 bg-white border border-black hover:bg-black hover:text-white transition duration-500 ">
+            <a :href="route('login.redirect', 'github')" :disabled="form.processing" as="button" class="w-full rounded-lg flex justify-between align-middle px-6 py-2.5 bg-white border border-black hover:bg-black hover:text-white transition duration-500 ">
                 <font-awesome-icon class="text-lg" icon="fa-brands fa-github" />
                 <p class="font-semibold text-md">Continue with Github</p>
                 <p></p>
@@ -86,6 +86,7 @@
                 store.addToast({message: 'Login successfull'});
             },
             onError : (err) => {
+                console.log(err);
                 store.addToast({message: 'Please try again', type: 'error'});
             }
         });

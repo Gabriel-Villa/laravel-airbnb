@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Access\AuthTypes;
+use App\Factories\AuthFactory;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use App\Strategy\AuthContext;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,21 +40,22 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
     }
 
-    public function handlerRedirect()
+    public function handlerRedirect($driver)
     {
-        return Socialite::driver('github')->redirect();
+        if(!in_array($driver, AuthTypes::getAvailableAuthMethods()))
+        {
+            abort(404);
+        }
+
+        return Socialite::driver($driver)->redirect();
     }
 
-    public function handlerCallback()
+    public function handlerCallback($driver)
     {
-        $user = Socialite::driver('github')->stateless()->user();
+        $authenticationInstance = AuthFactory::getAuthInstance($driver);
 
-        $user = User::firstOrCreate(
-            ['email' => 'dev@gmail.com'],
-            ['password' => Str::random(10), 'name' => $user->name]
-        );
-
-        Auth::login($user, true);
+        $context = new AuthContext($authenticationInstance);
+        $context->makeLogin();
 
         return redirect()->route('home')->with('toast', 'Login successful');
     }

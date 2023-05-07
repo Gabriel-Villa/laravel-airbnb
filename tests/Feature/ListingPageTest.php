@@ -30,13 +30,13 @@ class ListingPageTest extends TestCase
 
     public function test_listing_page_load_succesfully_if_user_is_authenticable(): void
     {
-
         $response = $this->actingAs($this->user)->get('/listing');
 
         $response->assertSuccessful();
 
         $response->assertInertia(fn (Assert $page) => $page
             ->component('Listing/Index')
+            ->has('locations')
         );
     }
 

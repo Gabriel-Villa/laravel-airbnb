@@ -21,8 +21,8 @@ Route::resource('/listing', ListingController::class)->only(['index', 'store', '
 
 Route::prefix('auth')->group(function()
 {
-    Route::get('redirect', [LoginController::class, 'handlerRedirect'])->name('login.redirect');
-    Route::get('callback', [LoginController::class, 'handlerCallback'])->name('login.callback');
+    Route::get('redirect/{driver}', [LoginController::class, 'handlerRedirect'])->name('login.redirect');
+    Route::get('callback/{driver}', [LoginController::class, 'handlerCallback'])->name('login.callback');
 });
 
 Route::resource('/reservation', ReservationController::class)->only(['store']);
