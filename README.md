@@ -1,3 +1,5 @@
+[![Laravel](https://github.com/Gabriel-Villa/laravel-airbnb/actions/workflows/laravel.yml/badge.svg)](https://github.com/Gabriel-Villa/laravel-airbnb/actions/workflows/laravel.yml)
+
 # Images
 
 1. Create listing page
