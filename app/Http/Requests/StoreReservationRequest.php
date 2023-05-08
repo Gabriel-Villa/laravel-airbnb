@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class StoreReservationRequest extends FormRequest
 {
@@ -27,4 +28,11 @@ class StoreReservationRequest extends FormRequest
             'listingId' => 'required|exists:listing,id',
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge(['startDate' => Carbon::createFromFormat("d/m/Y", $this->startDate)->format("Y-m-d")]);
+        $this->merge(['endDate' => Carbon::createFromFormat("d/m/Y", $this->endDate)->format("Y-m-d")]);
+    }
+
 }

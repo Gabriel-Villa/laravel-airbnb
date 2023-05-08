@@ -3,6 +3,7 @@
 @import 'vue-select/dist/vue-select.css';
 @import 'dropzone/dist/dropzone.css';
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

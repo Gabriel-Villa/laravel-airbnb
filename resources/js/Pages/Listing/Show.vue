@@ -41,21 +41,25 @@
                             <span class="text-sm ml-1">- nigth</span>
                         </div>
                         <div class="flex gap-2 flex-col">
-                            <div class="w-full">
-                                <InputLabel for="start_date" value="Start date" />
+                            <InputLabel for="start_date" value="Select a range range" />
+                            <input type="text" id="date_range" class="w-full">
+                            <!-- <div class="w-full">
+
                                 <input v-model="form.startDate" type="date" id="start_date" class="w-full">
                             </div>
                             <div class="w-full">
                                 <InputLabel for="end_date" value="End date" />
                                 <input v-model="form.endDate" type="date" id="end_date" class="w-full" placeholder="yyyy-mm-dd">
-                            </div>
+                            </div> -->
                         </div>
 
                         <p class="my-4">
                             Total: {{ totalAmount }}
                         </p>
 
-                        <DangerButton type="submit" :disabled="form.processing" class="w-full" v-if="$page.props.auth.user">Reserve</DangerButton>
+                        <DangerButton type="submit" :class="{ 'opacity-25': btnDisabled }" class="w-full" :disabled=btnDisabled v-if="$page.props.auth.user">
+                            Reserve
+                        </DangerButton>
                         <DangerButton class="w-full opacity-25 cursor-not-allowed" v-else>Log in to Reserve</DangerButton>
                     </div>
                 </div>
@@ -66,15 +70,19 @@
 </template>
 
 <script setup>
-    import { defineProps, ref, watch } from 'vue';
+    import { defineProps, onMounted, ref, watch } from 'vue';
+    import { router } from '@inertiajs/vue3';
     import moment from 'moment';
-    import { useForm } from '@inertiajs/vue3'
     import { useNotification } from '@/Stores/notification.js';
 
     import DangerButton from '@/Components/DangerButton.vue';
     import InputLabel from '@/Components/InputLabel.vue';
     import Layout from '@/Layouts/Layout.vue';
     import Map from '@/Components/Map.vue'
+
+    import AirDatepicker from 'air-datepicker';
+    import 'air-datepicker/air-datepicker.css';
+    import localeEn from 'air-datepicker/locale/en';
 
     const props = defineProps({
         listing: {
@@ -88,20 +96,49 @@
 
     const store = useNotification();
 
-    const form = useForm({
-        startDate: moment().format("YYYY-MM-DD"),
-        endDate: moment().format("YYYY-MM-DD"),
-    })
-
     const totalAmount = ref(props.normalPrice);
+    const startDate = ref(moment().format("DD/MM/YYYY"));
+    const endDate = ref(moment().add(2, 'days').format("DD/MM/YYYY"));
+    const btnDisabled = ref(false);
 
-    watch(form, (newValue, oldValue) =>
+    onMounted(() =>
     {
-        const start = new Date(newValue.startDate).getTime()
-        const end = new Date(newValue.endDate).getTime()
-        const diffInMs = end - start
+        new AirDatepicker('#date_range', {
+                dateFormat: "dd/MM/yyyy",
+                selectedDates: [new Date(), new Date().setDate(new Date().getDate() + 2)],
+                minDate: new Date(),
+                range: true,
+                multipleDatesSeparator: ' - ',
+                locale: localeEn,
+                onSelect({date, formattedDate, datepicker}) {
+                    if(formattedDate.length <= 1)
+                    {
+                        store.addToast({message: 'Please donde forget to select the end date'});
+                        btnDisabled.value = true;
+                        return false;
+                    }
+
+                    btnDisabled.value = false;
+                    startDate.value = formattedDate[0];
+                    endDate.value = formattedDate[1];
+                }
+            }
+        )
+    });
+
+    watch(endDate,  (endNewValue, endOldValue) =>
+    {
+        let start = moment(startDate.value, "DD/MM/YYYY").toDate();
+        let end = moment(endNewValue, "DD/MM/YYYY").toDate();
+
+        const test1 = new Date(start).getTime();
+        const test2 = new Date(end).getTime();
+
+        const diffInMs = test2 - test1
 
         let total = Math.floor(diffInMs / 86400000) * props.normalPrice;
+
+        console.log(total);
 
         if (total <= 0)
         {
@@ -117,20 +154,31 @@
 
     function submit()
     {
-        form
-            .transform((data) => ({
-                ...data,
-                listingId: props.listing.id
-            }))
-            .post(route('reservation.store'), {
+        btnDisabled.value = true;
+
+        router.visit(route('reservation.store'),
+        {
+            method: 'post',
+            data: {
+                startDate: startDate.value,
+                endDate: endDate.value,
+                listingId: props.listing.id,
+            },
             preserveScroll: true,
-                onError : (err) => {
-                    store.addToast({ message: 'Try again', type: 'error'});
-                },
-                onSuccess: (res) => {
-                    store.addToast({ message: res.props?.flash?.toast});
-                    form.reset('');
-                },
-            })
+            onSuccess: (res) => {
+                store.addToast({ message: res.props?.flash?.toast});
+                // form.reset('');
+            },
+            onError : (err) =>
+            {
+                for (let key in err)
+                {
+                    store.addToast({message: err[key], type: 'error'});
+                }
+            },
+            onFinish: visit => {
+                btnDisabled.value = false;
+            },
+        })
     }
 </script>

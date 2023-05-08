@@ -192,7 +192,6 @@
                 router.visit(route('home'));
             },
             onError: (err) => {
-                console.log("Err", err);
                 for (let key in err)
                 {
                     store.addToast({message: err[key], type: 'error'});
