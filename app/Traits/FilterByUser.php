@@ -8,7 +8,8 @@ trait FilterByUser
     {
         parent::boot();
 
-        self::creating(function ($model) {
+        self::creating(function ($model)
+        {
             $model->userId = auth()->id();
         });
 

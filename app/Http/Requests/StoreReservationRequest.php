@@ -31,8 +31,11 @@ class StoreReservationRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge(['startDate' => Carbon::createFromFormat("d/m/Y", $this->startDate)->format("Y-m-d")]);
-        $this->merge(['endDate' => Carbon::createFromFormat("d/m/Y", $this->endDate)->format("Y-m-d")]);
+        if($this->startDate && $this->endDate)
+        {
+            $this->merge(['startDate' => Carbon::createFromFormat("d/m/Y", $this->startDate)->format("Y-m-d")]);
+            $this->merge(['endDate' => Carbon::createFromFormat("d/m/Y", $this->endDate)->format("Y-m-d")]);
+        }
     }
 
 }

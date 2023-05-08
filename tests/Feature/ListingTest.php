@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Contracts\ListingImage;
 use App\Models\Category;
+use App\Models\Listing;
 use App\Models\Location;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
@@ -14,9 +15,10 @@ use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ListingPageTest extends TestCase
+class ListingTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     /**
      * A basic feature test example.
@@ -88,6 +90,26 @@ class ListingPageTest extends TestCase
         ]);
 
         $response->assertRedirect(route('home'));
+    }
+
+    public function test_page_listing_detail_loads_successfully(): void
+    {
+        $this->artisan('db:seed', ['--class' => 'LocationSeeder']);
+        $this->artisan('db:seed', ['--class' => 'CategorySeeder']);
+
+        $listing = Listing::factory()->create();
+
+        $response = $this->get('/listing/'.$listing->slug);
+
+        $response->assertStatus(200);
+    }
+
+    public function test_listing_detail_returns_404_page_not_found_for_nonexistent_listing()
+    {
+        $response = $this->get('/listing/'.$this->faker->text(20));
+
+        $response->assertStatus(404);
+        $response->assertSee("Not Found");
     }
 
 }

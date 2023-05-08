@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
-class HomePageTest extends TestCase
+class HomeTest extends TestCase
 {
 
     use RefreshDatabase;
