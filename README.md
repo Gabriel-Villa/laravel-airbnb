@@ -2,17 +2,17 @@
 
 # Images
 
-1. Create listing page
-![Create listing page](images/create-listing.png "create_listing_page")
+1. Steps to create a listing
+![Steps create Listing](images/steps-create-listing.png "steps_create_listing")
 
-2. Home page
+1. Home page
 ![Home page](images/home-page.png "home_page")
 
-3. Show page - 1
-![Show page 1](images/show-page-1.png "show_page_1")
+1. Detail listing - 1
+![Detail listing 1](images/detail-listing-1.png "detail_listing_1")
 
-4. Show page - 2
-![Show page 2](images/show-page-2.png "show_page_2")
+1. Detail listing - 2
+![Detail listing 2](images/detail-listing-2.png "detail_listing_2")
 
-5. Validations
+1. Validations
 ![Validations](images/validations.png "validations")
